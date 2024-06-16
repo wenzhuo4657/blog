@@ -196,6 +196,64 @@ Spring中默认用JDK动态代理 判断目标类是否实现接口，如果实�
 
 
 
+### 注解开发
+
+
+
+#### PrintLog注解
+
+@Aroud：支持自动传入ProceedingJoinPoint point
+
+@Before、@After：支持JoinPoint point
+
+但是Joinpoint无法获取方法的响应结果，经过查阅找到注解
+
+@AfterReturning(value = "cut()",returning = "result") 
+
+
+
+最终实现
+
+
+
+```
+
+
+@Aspect
+@Component
+public class LogApect {
+    private Logger log= LoggerFactory.getLogger(LogApect.class);
+
+    @Pointcut("@annotation(cn.wenzhuo4657.blog.basic.annotation.PrintLog)")
+    public  void cut(){
+
+    }
+
+    @Before("cut()")
+    public void before(JoinPoint point){
+
+        ServletRequestAttributes requestA =(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = requestA.getRequest();
+        MethodSignature methodSignature = (MethodSignature) point.getSignature();
+        String traceId = MDC.get(HttpEnum.traceId);
+        log.info("======start");
+        log.info("请求url: "+request.getRequestURI()+"  请求方式： "+request.getMethod());
+        log.info("访问IP    : {}"+"   请求类名   : {}",request.getRemoteHost(),point.getSignature().getDeclaringTypeName(),((MethodSignature) point.getSignature()).getName());
+        log.info("传入参数   : {}", JSON.toJSONString(point.getArgs()));
+    }
+
+    @AfterReturning(value = "cut()",returning = "result")
+    public void after(Object result){
+        try {
+            log.info("response   : {}", JSON.toJSONString(result));
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+}
+```
+
 
 
 ## log输出问题
@@ -375,5 +433,58 @@ Jetty 的线程策略
 
 
 
-查阅很多文章，没有找到替换新建线程池的办法，但是在其官方文档了解到其默认线程池实现是[`QueuedThreadPool`]，尝试注入bean
+查阅很多文章，没有找到替换新建线程池的办法，但是在其官方文档了解到其默认线程池实现是[`QueuedThreadPool`]，尝试注入bean，
 
+
+
+```
+
+
+
+```
+
+服了,发现原来是配置文件输出字段写错了，但是依旧了解到ServerConnector连接器可以设置线程池，
+
+
+
+遗留问题，无论是tomcat还是jetty,springboot都无法捕获到其内部的日志，查阅资料得知两者都属于嵌入式服务器，
+
+查阅发现，原来是日志设置不对，控制台中没有输出，是因为设置springboot日志为slf4j和logback，但是在其配置文件中并没有指定内嵌服务器的输出，
+
+
+
+在logback-spring.xml文件中可以这样设置，
+
+```
+
+
+    <logger name="org.eclipse.jetty" level="DEBUG"/>
+    
+```
+
+但问题又回到了上面，可以成功输出日志，但由于是内嵌服务器，且jetty启动在springboot之前，其线程不受springboot监管，也就是不在我编写java代码管理范围内，最终选择放弃内嵌服务器的日志，一方面是在控制台中输出会很多，另一方面，我的问题是为什么调用了请求，没有在控制台输出日志直接打印了请求方法的内容，这似乎是因为日志记录时间的触发原因的原因？、
+
+当我使用log.info时成功触发了日志记录在控制台输出，
+
+````
+
+@RestController
+@Slf4j
+public class test {
+
+    @RequestMapping(value = "/hello")
+    public  void print(){
+        log.info("这是测试");
+    }
+}
+````
+
+
+
+扩展：
+
+- `log.info` 是 SLF4J（Simple Logging Facade for Java）接口的一部分，通常配合 Logback 或 Log4j 等日志框架使用。SLF4J 提供了一个抽象层，允许你在不修改代码的情况下切换底层的日志实现。
+
+- 而System.out.println是java原生语法，无条件输出到控制台，
+
+  这也就以为这，System.out.println不会触发日志事件，log.info是日志门面的一部分，其底层实现会触发logback的控制台输出。

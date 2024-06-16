@@ -1,5 +1,7 @@
 package cn.wenzhuo4657.blog.basic.controller;
 
+import cn.wenzhuo4657.blog.basic.annotation.PrintLog;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,12 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @description:
  */
 @RestController
+@Slf4j
 public class test {
 
     @RequestMapping(value = "/hello")
-    public  void print(){
-        System.out.println("这是测试");
-        System.out.println("MDc:"+ MDC.get("traceId"));
+    @PrintLog
+    public  int print(int a){
+        return a*10;
 
     }
 }

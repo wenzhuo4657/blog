@@ -1,5 +1,6 @@
 package cn.wenzhuo4657.blog.basic;
 
+import cn.wenzhuo4657.blog.basic.Enum.HttpEnum;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.MDC;
 import org.springframework.boot.SpringApplication;
@@ -25,10 +26,8 @@ public class Application {
 
     public static Map<String, String> copyOfContextMap;
     public static void main(String[] args) {
-        MDC.put("traceId",String.valueOf(Thread.currentThread().getId()));
+        MDC.put(HttpEnum.traceId,String.valueOf(Thread.currentThread().getId()));
         copyOfContextMap = MDC.getCopyOfContextMap();
-
-
         SpringApplication.run(Application.class,args);
 
     }

@@ -1,6 +1,6 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 
-    <property name="console" value="==\n[%-5level] %red(%d{HH:mm}) Thread:[%thread]  Method:%green(%M) [traceId = %X{traceId}] classpath:%c \n%highlight(return):%m%n"></property>
+    <property name="console" value="==\n[%-5level] %red(%d{HH:mm}) Thread:[%thread]  Method:%green(%M) [traceId = %X{traceId}] classpath:%c \n%highlight:%m%n"></property>
     <springProperty scope="context" name="log_dir" source="project.folder"/>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -32,7 +32,11 @@
             <fileNamePattern>${log_dir}/All/demo.%d{yyyy-MM-dd}.log</fileNamePattern>
         </rollingPolicy>
 
-    </appender>
+    </appender >
+
+
+
+
 
 
 
@@ -42,12 +46,14 @@
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="All_APPENDER"></appender-ref>
         <appender-ref ref="SERVICE_APPENDER"/>
+
     </root>
+
+
 
     <logger name="cn/wenzhuo4657/blog/basic" level="INFO" additivity="false">
         <appender-ref ref="All_APPENDER"></appender-ref>
     </logger>
-
 
     <logger name="cn/wenzhuo4657/blog/basic/controller" level="ERROR" additivity="false">
         <appender-ref ref="SERVICE_APPENDER"/>
