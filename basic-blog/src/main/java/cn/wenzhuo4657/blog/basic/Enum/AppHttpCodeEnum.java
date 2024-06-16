@@ -1,4 +1,4 @@
-package cn.wenzhuo4657.blog.basic.domain;
+package cn.wenzhuo4657.blog.basic.Enum;
 
 public enum AppHttpCodeEnum {
     // 成功

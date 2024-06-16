@@ -1,5 +1,6 @@
 package cn.wenzhuo4657.blog.basic.domain;
 
+import cn.wenzhuo4657.blog.basic.Enum.AppHttpCodeEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;

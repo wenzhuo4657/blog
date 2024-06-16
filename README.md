@@ -314,6 +314,128 @@ ThreadContext：*Log4j版本2中将MDC和NDC合并到一个单独的组件中，
 
 
 
+##  认证和授权
+
+由于数据选用了rbac权限模型，所以必然会涉及的登录和授权，此处选用了Spring Security进行，过滤器链查询如下，
+
+![](http://obimage.wenzhuo4657.cn/20240616142316.png)
+
+
+
+
+
+
+
+
+
+其中关于认证的核心过滤器，也就是需要自定义分别为：
+
+**UsernamePasswordAuthenticationFilter**;
+
+关键方法
+
+```
+
+	@Override
+	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+			throws AuthenticationException {
+		if (this.postOnly && !request.getMethod().equals("POST")) {
+			throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
+		}
+		String username = obtainUsername(request);
+		username = (username != null) ? username : "";
+		username = username.trim();
+		String password = obtainPassword(request);
+		password = (password != null) ? password : "";
+		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
+		// Allow subclasses to set the "details" property
+		setDetails(request, authRequest);
+		return this.getAuthenticationManager().authenticate(authRequest);
+	}
+```
+
+其中这两个语句为关键语句，根据请求中的request找到username和password封装UserDetails
+
+		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
+		// Allow subclasses to set the "details" property
+		setDetails(request, authRequest);
+
+
+return  this.getAuthenticationManager().authenticate(authRequest);其文档注释为
+
+尝试验证传递的Authentication对象，如果成功则返回完全填充的Authentication对象（包括授予的权限）。
+
+
+
+其内部调用关键方法public UserDetails loadUserByUsername(String username) ，查询相关信息并封装为UserDetails中，
+
+
+
+除此之外还有密码的校验方式，调用bean ：PasswordEncoder，且注意，是bean，这意味着可以在springboot中进行装配，该校验方式的选择仅仅是查阅后推荐使用，
+
+```
+
+    @Bean
+    //把官方的PasswordEncoder密码加密方式替换成BCryptPasswordEncoder
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+```
+
+
+
+
+
+假设程序一直运行，那么上述流程的执行顺序是：
+
+
+
+
+
+
+
+
+
+
+
+
+
+至此我们已经完成了从数据库获取信息进行认证的流程，那么如何使会话持续时间更长呢?默认状况下springSecurity采用Httpsession创建`SecurityContext`，其生命周期就是会话的生命周期，所以引入了token这个概念，
+
+优点有，
+
+1，摆脱session跨域验证的限制，
+
+2，认证的存活时间由程序决定，而不是浏览器的会话周期
+
+3，服务端不需要维护session，减少了负担，
+
+4，便于和其他服务集成，因为是无状态的
+
+
+
+对此，有一个关键性类SecurityContext：
+
+定义与当前执行线程关联的最小安全信息的接口，安全上下文存储在`SecurityContextHolder`中，`SecurityContext`从`SecurityContextHolder`获取，并包含当前经过身份验证的用户的`Authentication`。
+
+
+
+对应管理这个类的是SecurityContextHolder，查看源码注释得知，其作用是将给定的SecurityContext与当前执行线程关联，内部使用ThreadLocal变量来保存当前线程的安全上下文。
+
+关于创建SecurityContext的方式：Spring Security会在每个HTTP请求开始时创建一个新的SecurityContext，尝试在Httpsession中获取并在请求结束时清除它
+
+
+
+
+
+目前想要实现的是从请求头中获取token，然后从redis中解析出UserDetals中存入SecurityContext中，
+
+
+
+
+
+
+
 # 报错
 
 ## org.slf4j.impl.StaticLoggerBinde
