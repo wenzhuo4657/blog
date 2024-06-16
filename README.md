@@ -326,7 +326,9 @@ logback+slf4j导入，并配置了logback-spring.xml，却仍旧先没有绑定s
 
 此外，其余依赖也存在slf4j，以及slf4j和logback在控制台混合输出的问题，这里注意到了是因为在logback中配置了输出样式，
 
-![image-20240615124109697](C:\Users\86147\AppData\Roaming\Typora\typora-user-images\image-20240615124109697.png)
+![](http://obimage.wenzhuo4657.cn/20240616125242.png)
+
+
 
 于是，选用日志依赖版本为以下，并排除了springboot以及其他依赖中的slf4j
 
@@ -393,7 +395,9 @@ logback+slf4j导入，并配置了logback-spring.xml，却仍旧先没有绑定s
 
 1，tomcat处理请求是新建子线程导致mdc丢失，
 
-![image-20240615161901186](C:\Users\86147\AppData\Roaming\Typora\typora-user-images\image-20240615161901186.png)
+![](http://obimage.wenzhuo4657.cn/image-20240615161901186.png)
+
+
 
 2，tomcat会内部处理请求的警告，不会传递给logback日志。
 
@@ -403,15 +407,15 @@ logback+slf4j导入，并配置了logback-spring.xml，却仍旧先没有绑定s
 
 进一步了解后发现
 
-![image-20240615163723246](C:\Users\86147\AppData\Roaming\Typora\typora-user-images\image-20240615163723246.png)
+![](http://obimage.wenzhuo4657.cn/image-20240615163325636.png)
 
 响应请求时，此处并没有打印日志，且依旧新建线程处理请求，尝试报错后发现其报警传递到logback中处理，并且可以获取到mdc，
 
-![image-20240615163943119](C:\Users\86147\AppData\Roaming\Typora\typora-user-images\image-20240615163943119.png)
+![](http://obimage.wenzhuo4657.cn/image-20240615163943119.png)
 
 但是在日志中查看依旧没有成功获取到mdc键值对，此处只能尝试去解决。
 
-![image-20240615164958715](C:\Users\86147\AppData\Roaming\Typora\typora-user-images\image-20240615164958715.png)
+![](http://obimage.wenzhuo4657.cn/image-20240615164958715.png)
 
 
 
