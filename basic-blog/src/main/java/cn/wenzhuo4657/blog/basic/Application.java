@@ -6,6 +6,7 @@ import org.slf4j.MDC;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Map;
@@ -20,8 +21,7 @@ import java.util.Map;
 
 @SpringBootApplication
 @MapperScan("cn.wenzhuo4657.blog.basic.dao")
-@EnableScheduling
-@EnableSwagger2
+@EnableWebSecurity
 public class Application {
 
     public static Map<String, String> copyOfContextMap;

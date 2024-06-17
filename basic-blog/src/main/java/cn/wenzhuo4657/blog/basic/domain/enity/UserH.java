@@ -1,5 +1,8 @@
 package cn.wenzhuo4657.blog.basic.domain.enity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import java.io.Serializable;
 
@@ -38,6 +41,7 @@ public class UserH implements Serializable {
     /**
      * 用户创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date creatTime;
 
 

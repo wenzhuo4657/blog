@@ -390,7 +390,7 @@ return  this.getAuthenticationManager().authenticate(authRequest);其文档注�
 
 
 
-
+![](http://obimage.wenzhuo4657.cn/20240617162757.png)
 
 
 
@@ -614,3 +614,79 @@ public class test {
 - 而System.out.println是java原生语法，无条件输出到控制台，
 
   这也就以为这，System.out.println不会触发日志事件，log.info是日志门面的一部分，其底层实现会触发logback的控制台输出。
+
+##  Consider defining a bean of type 'org.springframework.security.authentication.AuthenticationManager' in your configuration.
+
+```
+    @Bean( name="authenticationManager")
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+```
+
+已经添加bean的情况下，并且设置order注解调整注入的顺序，依旧报错，很奇怪
+
+
+
+
+
+解决，类注解写错了 应该是@Configuration，而不是@Configurable
+
+
+
+
+
+前者用于注入bean，属于spring的五个注入bean的注解之一，
+
+
+
+
+
+@Configurable：
+
+应用场景为：当某个bean在某个不是bean的类中被使用时，创建bean是无法通过di注入，只能通过new，这时，有可能该bean的内部使用了依赖注入（比如其某个属性使用了@Autowired注解），但是spring无法对new出来的对象进行管理，此时就需要使用注解@Configurable
+
+类似于
+
+```
+@Configurable(preConstruction = true)
+@Component
+public class Car {
+ 
+    @Autowired
+    private Engine engine;
+    @Autowired
+    private Transmission transmission;
+ 
+    public void startCar() {
+        transmission.setGear(1);
+        engine.engineOn();
+ 
+        System.out.println("Car started");
+    }
+}
+```
+
+@Configurable(preConstruction = true):作用是，告知spring在构造函数运行之前就对其进行注入，也就是spring的属性注入功能，
+
+查看源码有：
+
+
+
+![](http://obimage.wenzhuo4657.cn/20240617155950.png)
+
+
+
+## spring默认序列化jackson序列化时间格式数据出错
+
+使用注解@JsonForma自定义序列化时间格式
+
+```
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date creatTime;
+```
+
+
+
