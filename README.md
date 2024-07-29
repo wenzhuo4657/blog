@@ -434,7 +434,7 @@ return  this.getAuthenticationManager().authenticate(authRequest);其文档注�
 
 
 
-
+过滤器选择，查阅得知OncePerRequestFilter是spring框架专门提供给开发者的扩展点，在底层设计为对于每次请求仅仅会执行一次，且执行时机可在springSecurityConfig中设置为过滤器链的鉴权认证过滤器前，大大节约了资源消耗
 
 # 报错
 
