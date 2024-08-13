@@ -5,11 +5,11 @@ import cn.wenzhuo4657.blog.basic.domain.ResponseResult;
 import cn.wenzhuo4657.blog.basic.domain.enity.UserH;
 import cn.wenzhuo4657.blog.basic.exception.SystemException;
 import cn.wenzhuo4657.blog.basic.service.LoginService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @className: LoginController
@@ -19,17 +19,26 @@ import org.springframework.web.bind.annotation.RestController;
  * @description:
  */
 @RestController
+@Api(tags = "登录相关api")
 public class LoginController {
 
     @Autowired
     private LoginService loginService;
 
     @PostMapping("/login")
+    @ApiOperation(notes = "用户名不能为空",value = "登入")
     public ResponseResult login(@RequestBody UserH user){
         if (!StringUtils.hasText(user.getUserName())){
             throw  new SystemException(AppHttpCodeEnum.REQUIRE_USERNAME);//简单校验，
         }
         return loginService.login(user);
+    }
+
+
+    @PostMapping("/logout")
+    @ApiOperation(value = "登出")
+    public ResponseResult logout(){
+        return loginService.logout();
     }
 
 

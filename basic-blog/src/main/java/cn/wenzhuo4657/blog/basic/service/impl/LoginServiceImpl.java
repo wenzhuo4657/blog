@@ -1,6 +1,5 @@
 package cn.wenzhuo4657.blog.basic.service.impl;
 
-import cn.wenzhuo4657.blog.basic.Enum.AppHttpCodeEnum;
 import cn.wenzhuo4657.blog.basic.Enum.HttpEnum;
 import cn.wenzhuo4657.blog.basic.domain.ResponseResult;
 import cn.wenzhuo4657.blog.basic.domain.enity.LoginUser;
@@ -14,7 +13,7 @@ import cn.wenzhuo4657.blog.basic.utils.RedisCache;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -46,12 +45,22 @@ public class LoginServiceImpl implements LoginService {
         if(Objects.isNull(authenticaation)){
             throw   new RuntimeException("用户名密码错误");
         }
+        SecurityContextHolder.getContext().setAuthentication(authenticaation);
         LoginUser  loginUser = (LoginUser) authenticaation.getPrincipal();
         String  id = loginUser.getUser().getId().toString();
         redisCache.setCacheObject(HttpEnum.redis_user+id,loginUser);
         String jwt= JwtUtil.createJWT(id);
-        UserInfoVo vo= BeancopyUtils.copyBean(user,UserInfoVo.class);
+        UserInfoVo vo= BeancopyUtils.copyBean(loginUser.getUser(),UserInfoVo.class);
         UserLoginVo loginVo=new UserLoginVo(jwt,vo);
         return ResponseResult.okResult(loginVo);
+    }
+
+
+    @Override
+    public ResponseResult logout() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser user= (LoginUser) authentication.getPrincipal();
+        redisCache.deleteObject(HttpEnum.redis_user+user.getUser().getId());
+        return ResponseResult.okResult();
     }
 }

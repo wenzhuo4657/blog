@@ -30,7 +30,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         LambdaQueryWrapper<UserH> wrapper=new LambdaQueryWrapper<>();
         wrapper.eq(UserH::getUserName,username);
         UserH userH=userHDao.selectOne(wrapper);
-        //  wenzhuo TODO 2024/6/16 : 暂时先不填充权限，
         LoginUser loginUser =new LoginUser(userH,new ArrayList<>());
         return loginUser;
 
