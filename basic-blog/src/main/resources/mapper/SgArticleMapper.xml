@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.wenzhuo4657.blog.basic.dao.SgArticleMapper">
+<!--    文章通用查询条件-->
+    <sql id="query_condition">
+        <where>
+        <if test="viewCount>-1L">
+            and view_count >= #{viewCount}
+        </if>
+        <if test="isComment!=null">
+            and is_comment=#{isComment}
+        </if>
+       <if test="delFlag!=null">
+           and del_flag=#{isComment}
+       </if>
+        </where>
+
+
+    </sql>
+    <sql id="query_condition:last">
+        <if test="nums!=null and offset !=null">
+            limit #{nums}  offset  #{offset}
+        </if>
+    </sql>
+
+    <select id="selectHot" resultType="cn.wenzhuo4657.blog.basic.domain.enity.SgArticle" >
+            select * from sg_article
+           <include refid="query_condition"></include>
+            order by view_count desc
+            <include refid="query_condition:last"></include>
+    </select>
+
+    <select id="selectArticleList" resultType="cn.wenzhuo4657.blog.basic.domain.enity.SgArticle">
+        select * from sg_article
+        <where>
+            <if test="categoryid!=null and categoryid>0">
+                category_id=#{categoryid}
+            </if>
+            and status=#{status}
+        </where>
+        order by is_top  desc
+    </select>
+</mapper>
