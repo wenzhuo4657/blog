@@ -15,4 +15,8 @@ public interface SgArticleService extends IService<SgArticle> {
     ResponseResult hot();
 
     ResponseResult getarticleList(Integer pageNum, Integer pageSize, Integer categoryid);
+
+    ResponseResult getDetalis(Long id);
+
+    ResponseResult updateViewCount(Long id);
 }

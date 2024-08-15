@@ -8,79 +8,79 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 文章表
- * @TableName sg_article
+ * 用户表
+ * @TableName sys_user
  */
-@TableName(value ="sg_article")
-public class SgArticle implements Serializable {
+@TableName(value ="sys_user")
+public class User implements Serializable {
     /**
-     * 
+     * 主键
      */
     @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
-     * 标题
+     * 用户名
      */
-    private String title;
+    private String userName;
 
     /**
-     * 文章内容
+     * 昵称
      */
-    private String content;
+    private String nickName;
 
     /**
-     * 文章摘要
+     * 密码
      */
-    private String summary;
+    private String password;
 
     /**
-     * 所属分类id
+     * 用户类型：0代表普通用户，1代表管理员
      */
-    private Long categoryId;
+    private String type;
 
     /**
-     * 缩略图
-     */
-    private String thumbnail;
-
-    /**
-     * 是否置顶（0否，1是）
-     */
-    private String isTop;
-
-    /**
-     * 状态（0已发布，1草稿）
+     * 账号状态（0正常 1停用）
      */
     private String status;
 
     /**
-     * 访问量
+     * 邮箱
      */
-    private Long viewCount;
+    private String email;
 
     /**
-     * 是否允许评论 1是，0否
+     * 手机号
      */
-    private String isComment;
+    private String phonenumber;
 
     /**
-     * 
+     * 用户性别（0男，1女，2未知）
+     */
+    private String sex;
+
+    /**
+     * 头像
+     */
+    private String avatar;
+
+    /**
+     * 创建人的用户id
      */
     private Long createBy;
 
     /**
-     * 
+     * 创建时间
      */
     private Date createTime;
 
     /**
-     * 
+     * 更新人
      */
     private Long updateBy;
 
     /**
-     * 
+     * 更新时间
      */
     private Date updateTime;
 
@@ -89,215 +89,200 @@ public class SgArticle implements Serializable {
      */
     private Integer delFlag;
 
-
-      /**
-         *  des: 以下两个成员变量非数据字段映射，
-         * */
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
-    @TableField(exist = false)
-    private String categoryName;
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
     /**
-     * 
+     * 主键
      */
     public Long getId() {
         return id;
     }
 
     /**
-     * 
+     * 主键
      */
     public void setId(Long id) {
         this.id = id;
     }
 
     /**
-     * 标题
+     * 用户名
      */
-    public String getTitle() {
-        return title;
+    public String getUserName() {
+        return userName;
     }
 
     /**
-     * 标题
+     * 用户名
      */
-    public void setTitle(String title) {
-        this.title = title;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     /**
-     * 文章内容
+     * 昵称
      */
-    public String getContent() {
-        return content;
+    public String getNickName() {
+        return nickName;
     }
 
     /**
-     * 文章内容
+     * 昵称
      */
-    public void setContent(String content) {
-        this.content = content;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     /**
-     * 文章摘要
+     * 密码
      */
-    public String getSummary() {
-        return summary;
+    public String getPassword() {
+        return password;
     }
 
     /**
-     * 文章摘要
+     * 密码
      */
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**
-     * 所属分类id
+     * 用户类型：0代表普通用户，1代表管理员
      */
-    public Long getCategoryId() {
-        return categoryId;
+    public String getType() {
+        return type;
     }
 
     /**
-     * 所属分类id
+     * 用户类型：0代表普通用户，1代表管理员
      */
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**
-     * 缩略图
-     */
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    /**
-     * 缩略图
-     */
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    /**
-     * 是否置顶（0否，1是）
-     */
-    public String getIsTop() {
-        return isTop;
-    }
-
-    /**
-     * 是否置顶（0否，1是）
-     */
-    public void setIsTop(String isTop) {
-        this.isTop = isTop;
-    }
-
-    /**
-     * 状态（0已发布，1草稿）
+     * 账号状态（0正常 1停用）
      */
     public String getStatus() {
         return status;
     }
 
     /**
-     * 状态（0已发布，1草稿）
+     * 账号状态（0正常 1停用）
      */
     public void setStatus(String status) {
         this.status = status;
     }
 
     /**
-     * 访问量
+     * 邮箱
      */
-    public Long getViewCount() {
-        return viewCount;
+    public String getEmail() {
+        return email;
     }
 
     /**
-     * 访问量
+     * 邮箱
      */
-    public void setViewCount(Long viewCount) {
-        this.viewCount = viewCount;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     /**
-     * 是否允许评论 1是，0否
+     * 手机号
      */
-    public String getIsComment() {
-        return isComment;
+    public String getPhonenumber() {
+        return phonenumber;
     }
 
     /**
-     * 是否允许评论 1是，0否
+     * 手机号
      */
-    public void setIsComment(String isComment) {
-        this.isComment = isComment;
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
     }
 
     /**
-     * 
+     * 用户性别（0男，1女，2未知）
+     */
+    public String getSex() {
+        return sex;
+    }
+
+    /**
+     * 用户性别（0男，1女，2未知）
+     */
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    /**
+     * 头像
+     */
+    public String getAvatar() {
+        return avatar;
+    }
+
+    /**
+     * 头像
+     */
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    /**
+     * 创建人的用户id
      */
     public Long getCreateBy() {
         return createBy;
     }
 
     /**
-     * 
+     * 创建人的用户id
      */
     public void setCreateBy(Long createBy) {
         this.createBy = createBy;
     }
 
     /**
-     * 
+     * 创建时间
      */
     public Date getCreateTime() {
         return createTime;
     }
 
     /**
-     * 
+     * 创建时间
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
     /**
-     * 
+     * 更新人
      */
     public Long getUpdateBy() {
         return updateBy;
     }
 
     /**
-     * 
+     * 更新人
      */
     public void setUpdateBy(Long updateBy) {
         this.updateBy = updateBy;
     }
 
     /**
-     * 
+     * 更新时间
      */
     public Date getUpdateTime() {
         return updateTime;
     }
 
     /**
-     * 
+     * 更新时间
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
@@ -328,17 +313,17 @@ public class SgArticle implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        SgArticle other = (SgArticle) that;
+        User other = (User) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
-            && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
-            && (this.getSummary() == null ? other.getSummary() == null : this.getSummary().equals(other.getSummary()))
-            && (this.getCategoryId() == null ? other.getCategoryId() == null : this.getCategoryId().equals(other.getCategoryId()))
-            && (this.getThumbnail() == null ? other.getThumbnail() == null : this.getThumbnail().equals(other.getThumbnail()))
-            && (this.getIsTop() == null ? other.getIsTop() == null : this.getIsTop().equals(other.getIsTop()))
+            && (this.getUserName() == null ? other.getUserName() == null : this.getUserName().equals(other.getUserName()))
+            && (this.getNickName() == null ? other.getNickName() == null : this.getNickName().equals(other.getNickName()))
+            && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
+            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getViewCount() == null ? other.getViewCount() == null : this.getViewCount().equals(other.getViewCount()))
-            && (this.getIsComment() == null ? other.getIsComment() == null : this.getIsComment().equals(other.getIsComment()))
+            && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
+            && (this.getPhonenumber() == null ? other.getPhonenumber() == null : this.getPhonenumber().equals(other.getPhonenumber()))
+            && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
+            && (this.getAvatar() == null ? other.getAvatar() == null : this.getAvatar().equals(other.getAvatar()))
             && (this.getCreateBy() == null ? other.getCreateBy() == null : this.getCreateBy().equals(other.getCreateBy()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateBy() == null ? other.getUpdateBy() == null : this.getUpdateBy().equals(other.getUpdateBy()))
@@ -351,15 +336,15 @@ public class SgArticle implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
-        result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
-        result = prime * result + ((getSummary() == null) ? 0 : getSummary().hashCode());
-        result = prime * result + ((getCategoryId() == null) ? 0 : getCategoryId().hashCode());
-        result = prime * result + ((getThumbnail() == null) ? 0 : getThumbnail().hashCode());
-        result = prime * result + ((getIsTop() == null) ? 0 : getIsTop().hashCode());
+        result = prime * result + ((getUserName() == null) ? 0 : getUserName().hashCode());
+        result = prime * result + ((getNickName() == null) ? 0 : getNickName().hashCode());
+        result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
+        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
-        result = prime * result + ((getViewCount() == null) ? 0 : getViewCount().hashCode());
-        result = prime * result + ((getIsComment() == null) ? 0 : getIsComment().hashCode());
+        result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
+        result = prime * result + ((getPhonenumber() == null) ? 0 : getPhonenumber().hashCode());
+        result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
+        result = prime * result + ((getAvatar() == null) ? 0 : getAvatar().hashCode());
         result = prime * result + ((getCreateBy() == null) ? 0 : getCreateBy().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateBy() == null) ? 0 : getUpdateBy().hashCode());
@@ -375,15 +360,15 @@ public class SgArticle implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", title=").append(title);
-        sb.append(", content=").append(content);
-        sb.append(", summary=").append(summary);
-        sb.append(", categoryId=").append(categoryId);
-        sb.append(", thumbnail=").append(thumbnail);
-        sb.append(", isTop=").append(isTop);
+        sb.append(", userName=").append(userName);
+        sb.append(", nickName=").append(nickName);
+        sb.append(", password=").append(password);
+        sb.append(", type=").append(type);
         sb.append(", status=").append(status);
-        sb.append(", viewCount=").append(viewCount);
-        sb.append(", isComment=").append(isComment);
+        sb.append(", email=").append(email);
+        sb.append(", phonenumber=").append(phonenumber);
+        sb.append(", sex=").append(sex);
+        sb.append(", avatar=").append(avatar);
         sb.append(", createBy=").append(createBy);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateBy=").append(updateBy);

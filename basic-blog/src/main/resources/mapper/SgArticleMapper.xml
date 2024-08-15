@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.wenzhuo4657.blog.basic.dao.SgArticleMapper">
+<!--    实体映射集合-->
+    <resultMap id="ArticleDetailVo_result_map" type="cn.wenzhuo4657.blog.basic.domain.vo.ArticleDetailVo">
+        <result column="name" property="categoryName"></result>
+    </resultMap>
+    <!--查询集合列-->
+    <sql id="HotArtcleVo_column_list">
+        art.id,art.title,art.view_count
+    </sql>
+    <sql id="ArticleDetailVo_column_list" >
+        <include refid="HotArtcleVo_column_list"></include>
+        ,art.summary,art.category_id,art.content,art.thumbnail,art.create_time,cate.`name`
+    </sql>
+
+
+
+
+
+
 <!--    文章通用查询条件-->
     <sql id="query_condition">
         <where>
@@ -23,8 +41,8 @@
         </if>
     </sql>
 
-    <select id="selectHot" resultType="cn.wenzhuo4657.blog.basic.domain.enity.SgArticle" >
-            select * from sg_article
+    <select id="selectHot" resultType="cn.wenzhuo4657.blog.basic.domain.vo.HotArtcleVo" >
+            select  <include refid="HotArtcleVo_column_list"></include> from sg_article as art
            <include refid="query_condition"></include>
             order by view_count desc
             <include refid="query_condition:last"></include>
@@ -40,4 +58,18 @@
         </where>
         order by is_top  desc
     </select>
+    <select id="selectCategoryIdList" resultType="java.util.List">
+        select  DISTINCT  category_id from  sg_article
+    </select>
+    <select id="selectDetalis" resultMap="ArticleDetailVo_result_map">
+            select <include refid="ArticleDetailVo_column_list"></include>
+                from sg_article as art
+                left join sg_category as cate
+                on  art.category_id=cate.id
+            where art.id=#{id}
+    </select>
+    <select id="getViewcountMap" resultType="cn.wenzhuo4657.blog.basic.domain.enity.SgArticle">
+        select  art.id ,art.view_count from sg_article as art
+    </select>
+
 </mapper>

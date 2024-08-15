@@ -7,9 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @className: ArticleController
@@ -52,5 +50,25 @@ public class ArticleController {
     public ResponseResult  articleList(Integer pageNum,Integer pageSize,Integer categoryId){
         return   sgArticleService.getarticleList(pageNum,pageSize,categoryId);
     }
+
+
+
+    @GetMapping(value = "/{id}")
+    @PrintLog
+    @ApiOperation(value = "获取指定文章实体")
+    public ResponseResult get(@PathVariable("id") Long id){
+        return   sgArticleService.getDetalis(id);
+    }
+
+
+    @PutMapping(value = "/updateViewCount/{id}")
+    @PrintLog
+    @ApiOperation(value = "递增访问量",notes = "该处只在redis中记录浏览量，未同步到mysql数据库中,且注意该接口和访问文章实体接口不一致，这意味着即时获取失败，浏览量也递增。")
+    public ResponseResult updateViewCount(@PathVariable("id") Long id){
+        return   sgArticleService.updateViewCount(id);
+    }
+
+
+
 
 }

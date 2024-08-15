@@ -8,11 +8,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 文章表
- * @TableName sg_article
+ * 分类表
+ * @TableName sg_category
  */
-@TableName(value ="sg_article")
-public class SgArticle implements Serializable {
+@TableName(value ="sg_category")
+public class SgCategory implements Serializable {
     /**
      * 
      */
@@ -20,49 +20,24 @@ public class SgArticle implements Serializable {
     private Long id;
 
     /**
-     * 标题
+     * 分类名
      */
-    private String title;
+    private String name;
 
     /**
-     * 文章内容
+     * 父分类id，如果没有父分类为-1
      */
-    private String content;
+    private Long pid;
 
     /**
-     * 文章摘要
+     * 描述
      */
-    private String summary;
+    private String description;
 
     /**
-     * 所属分类id
-     */
-    private Long categoryId;
-
-    /**
-     * 缩略图
-     */
-    private String thumbnail;
-
-    /**
-     * 是否置顶（0否，1是）
-     */
-    private String isTop;
-
-    /**
-     * 状态（0已发布，1草稿）
+     * 状态0:正常,1禁用
      */
     private String status;
-
-    /**
-     * 访问量
-     */
-    private Long viewCount;
-
-    /**
-     * 是否允许评论 1是，0否
-     */
-    private String isComment;
 
     /**
      * 
@@ -89,23 +64,8 @@ public class SgArticle implements Serializable {
      */
     private Integer delFlag;
 
-
-      /**
-         *  des: 以下两个成员变量非数据字段映射，
-         * */
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
-
-    @TableField(exist = false)
-    private String categoryName;
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
 
     /**
      * 
@@ -122,129 +82,59 @@ public class SgArticle implements Serializable {
     }
 
     /**
-     * 标题
+     * 分类名
      */
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
     /**
-     * 标题
+     * 分类名
      */
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
-     * 文章内容
+     * 父分类id，如果没有父分类为-1
      */
-    public String getContent() {
-        return content;
+    public Long getPid() {
+        return pid;
     }
 
     /**
-     * 文章内容
+     * 父分类id，如果没有父分类为-1
      */
-    public void setContent(String content) {
-        this.content = content;
+    public void setPid(Long pid) {
+        this.pid = pid;
     }
 
     /**
-     * 文章摘要
+     * 描述
      */
-    public String getSummary() {
-        return summary;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * 文章摘要
+     * 描述
      */
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
-     * 所属分类id
-     */
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    /**
-     * 所属分类id
-     */
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    /**
-     * 缩略图
-     */
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    /**
-     * 缩略图
-     */
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    /**
-     * 是否置顶（0否，1是）
-     */
-    public String getIsTop() {
-        return isTop;
-    }
-
-    /**
-     * 是否置顶（0否，1是）
-     */
-    public void setIsTop(String isTop) {
-        this.isTop = isTop;
-    }
-
-    /**
-     * 状态（0已发布，1草稿）
+     * 状态0:正常,1禁用
      */
     public String getStatus() {
         return status;
     }
 
     /**
-     * 状态（0已发布，1草稿）
+     * 状态0:正常,1禁用
      */
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    /**
-     * 访问量
-     */
-    public Long getViewCount() {
-        return viewCount;
-    }
-
-    /**
-     * 访问量
-     */
-    public void setViewCount(Long viewCount) {
-        this.viewCount = viewCount;
-    }
-
-    /**
-     * 是否允许评论 1是，0否
-     */
-    public String getIsComment() {
-        return isComment;
-    }
-
-    /**
-     * 是否允许评论 1是，0否
-     */
-    public void setIsComment(String isComment) {
-        this.isComment = isComment;
     }
 
     /**
@@ -328,17 +218,12 @@ public class SgArticle implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        SgArticle other = (SgArticle) that;
+        SgCategory other = (SgCategory) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
-            && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
-            && (this.getSummary() == null ? other.getSummary() == null : this.getSummary().equals(other.getSummary()))
-            && (this.getCategoryId() == null ? other.getCategoryId() == null : this.getCategoryId().equals(other.getCategoryId()))
-            && (this.getThumbnail() == null ? other.getThumbnail() == null : this.getThumbnail().equals(other.getThumbnail()))
-            && (this.getIsTop() == null ? other.getIsTop() == null : this.getIsTop().equals(other.getIsTop()))
+            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+            && (this.getPid() == null ? other.getPid() == null : this.getPid().equals(other.getPid()))
+            && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getViewCount() == null ? other.getViewCount() == null : this.getViewCount().equals(other.getViewCount()))
-            && (this.getIsComment() == null ? other.getIsComment() == null : this.getIsComment().equals(other.getIsComment()))
             && (this.getCreateBy() == null ? other.getCreateBy() == null : this.getCreateBy().equals(other.getCreateBy()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateBy() == null ? other.getUpdateBy() == null : this.getUpdateBy().equals(other.getUpdateBy()))
@@ -351,15 +236,10 @@ public class SgArticle implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
-        result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
-        result = prime * result + ((getSummary() == null) ? 0 : getSummary().hashCode());
-        result = prime * result + ((getCategoryId() == null) ? 0 : getCategoryId().hashCode());
-        result = prime * result + ((getThumbnail() == null) ? 0 : getThumbnail().hashCode());
-        result = prime * result + ((getIsTop() == null) ? 0 : getIsTop().hashCode());
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getPid() == null) ? 0 : getPid().hashCode());
+        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
-        result = prime * result + ((getViewCount() == null) ? 0 : getViewCount().hashCode());
-        result = prime * result + ((getIsComment() == null) ? 0 : getIsComment().hashCode());
         result = prime * result + ((getCreateBy() == null) ? 0 : getCreateBy().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateBy() == null) ? 0 : getUpdateBy().hashCode());
@@ -375,15 +255,10 @@ public class SgArticle implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", title=").append(title);
-        sb.append(", content=").append(content);
-        sb.append(", summary=").append(summary);
-        sb.append(", categoryId=").append(categoryId);
-        sb.append(", thumbnail=").append(thumbnail);
-        sb.append(", isTop=").append(isTop);
+        sb.append(", name=").append(name);
+        sb.append(", pid=").append(pid);
+        sb.append(", description=").append(description);
         sb.append(", status=").append(status);
-        sb.append(", viewCount=").append(viewCount);
-        sb.append(", isComment=").append(isComment);
         sb.append(", createBy=").append(createBy);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateBy=").append(updateBy);

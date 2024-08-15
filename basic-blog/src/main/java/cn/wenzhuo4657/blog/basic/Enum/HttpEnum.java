@@ -12,4 +12,16 @@ public interface HttpEnum {
      * */
     int articleStatusP =0;
     int articleStatusH =1;
+
+
+      /**
+         *  des: 文章分裂状态码（0可用，1禁用）
+         * */
+    int categoryStatusP =0;
+    int categoryStatusH =1;
+
+      /**
+         *  des: redis中文章浏览量key前缀
+         * */
+    String article_viewCount ="article_viewCount";
 }

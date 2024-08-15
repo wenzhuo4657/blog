@@ -47,6 +47,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 
+        //  wenzhuo TODO 2024/8/15 : token在前端失效后，登录状态依旧保存，但是在logout接口中没有返回token
         String token = (String)request.getHeader("token");
         if (!StringUtils.hasText(token)){
             chain.doFilter(request,response);
