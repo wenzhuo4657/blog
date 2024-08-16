@@ -31,4 +31,13 @@ public interface HttpEnum {
          * */
     int comment_Article =0 ;
     int comment_LiNK =1 ;
+
+
+      /**
+         *  des:  友链审核状态 (0代表审核通过，1代表审核未通过，2代表未审核)
+       *
+         * */
+    int Link_status_P=0;
+    int Link_status_H=1;
+    int Link_status_F=2;
 }

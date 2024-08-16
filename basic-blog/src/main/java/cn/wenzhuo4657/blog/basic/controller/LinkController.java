@@ -2,6 +2,7 @@ package cn.wenzhuo4657.blog.basic.controller;
 
 import cn.wenzhuo4657.blog.basic.annotation.PrintLog;
 import cn.wenzhuo4657.blog.basic.domain.ResponseResult;
+import cn.wenzhuo4657.blog.basic.service.LinkService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,9 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/link")
 @Api(tags = "友链相关api")
 public class LinkController {
+
+
+    private LinkService linkService;
+
+    public LinkController(LinkService linkService) {
+        this.linkService = linkService;
+    }
+
     @PostMapping("/getAllLink")
     @PrintLog
     public ResponseResult getAllLink(){
-        return loginService.logout();
+        return linkService.getAll();
     }
 }

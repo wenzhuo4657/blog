@@ -40,4 +40,11 @@ public class UserInfoController {
     public  ResponseResult updateUserInfo(@RequestBody User user){
         return userService.updateUserInfo(user);
     }
+
+    @PostMapping("/register")
+    @PrintLog
+    @ApiOperation(value = "注册")
+    public  ResponseResult register(@RequestBody  User user){
+        return  userService.register(user);
+    }
 }
