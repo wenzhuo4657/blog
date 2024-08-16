@@ -1,6 +1,7 @@
 package cn.wenzhuo4657.blog.basic.service;
 
 
+import cn.wenzhuo4657.blog.basic.domain.ResponseResult;
 import cn.wenzhuo4657.blog.basic.domain.enity.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -11,4 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface CommentService extends IService<Comment> {
 
+    ResponseResult commentList(int type, Integer pageNum, Integer pageSize, Long articleId);
+
+    ResponseResult add(Comment comment);
 }

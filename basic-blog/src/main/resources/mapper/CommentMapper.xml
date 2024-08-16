@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.wenzhuo4657.blog.basic.domain.enity.Comment">
+<mapper namespace="cn.wenzhuo4657.blog.basic.dao.CommentMapper">
 
     <resultMap id="BaseResultMap" type="cn.wenzhuo4657.blog.basic.domain.enity.Comment">
             <id property="id" column="id" jdbcType="BIGINT"/>
@@ -25,4 +25,25 @@
         to_comment_id,create_by,create_time,
         update_by,update_time,del_flag
     </sql>
+
+
+    <sql id="base_CommentVo">
+        id,article_id,root_id,content,to_comment_user_id,
+            to_comment_id,create_by,create_time
+    </sql>
+    <select id="getCommentList" resultType="cn.wenzhuo4657.blog.basic.domain.vo.CommentVo">
+        select <include refid="base_CommentVo"></include>
+            from sg_comment
+        where
+            type=#{type}
+            and article_Id=#{articleId}
+            and root_id=#{isRoot}
+    </select>
+    <select id="selectChildren" resultType="cn.wenzhuo4657.blog.basic.domain.vo.CommentVo">
+        select <include refid="base_CommentVo"></include>
+        from sg_comment
+        where
+            root_id=#{id}
+        order by create_time desc
+    </select>
 </mapper>
