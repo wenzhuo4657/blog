@@ -1,7 +1,9 @@
 package cn.wenzhuo4657.blog.basic.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -13,22 +15,39 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 @Configuration
-@EnableSwagger2 //开启swagger功能
+//@EnableSwagger2 //开启swagger功能
 public class SwaggerConfig {
 
 
+    @Value("${swagger.basePackage}")
+    private String  basePackage;
 
 
-    @Bean
+
+    @Bean("docket-basic")
+    @Profile("basic")
     public Docket defaultDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo1())
                 .groupName("Intuitive")
                 .select()
                 .apis(RequestHandlerSelectors.
-                        basePackage("cn.wenzhuo4657.blog.basic.controller"))
+                        basePackage(basePackage))
                        .paths(PathSelectors.any()
                        ).build();
+    }
+
+    @Bean("docket-admin")
+    @Profile("admin")
+    public Docket adminDocket() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo1())
+                .groupName("admin")
+                .select()
+                .apis(RequestHandlerSelectors.
+                        basePackage(basePackage))
+                .paths(PathSelectors.any()
+                ).build();
     }
 
 

@@ -11,6 +11,8 @@ spring:
     username: root
     password: 465700
     driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    active: basic,security-basic
 
   servlet:
     multipart:
@@ -20,6 +22,11 @@ spring:
     host: 127.0.0.1
     port: 6379
     database: 0
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api/v2/api-docs
 
 
 mybatis-plus:
@@ -44,7 +51,8 @@ project:
   folder:  E:/logs/app
 
 
-
+swagger:
+  basePackage: cn.wenzhuo4657.blog.basic.controller
 
 
 

@@ -11,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 @SpringBootApplication
 @MapperScan("cn.wenzhuo4657.blog.basic.dao")
 @EnableWebSecurity
+@EnableSwagger2
 public class Application implements CommandLineRunner {
 
 

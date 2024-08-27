@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>basic-blog</module>
+        <module>admin-blog</module>
     </modules>
 
     <properties>
