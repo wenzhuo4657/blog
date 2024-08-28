@@ -1,5 +1,5 @@
 server:
-  port: 81
+  port: 8989
   jetty:
     acceptors: 2
     selectors: 4
