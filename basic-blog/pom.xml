@@ -81,15 +81,23 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.1.1</version>
         </dependency>
 
         <!--        mp-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>HikariCP</artifactId>
+                    <groupId>com.zaxxer</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -185,6 +193,7 @@
                                     <excludes>
                                         <exclude>application.yml</exclude>
                                         <exclude>logback-spring.xml</exclude>
+                                        //  wenzhuo TODO 2024/8/29 : 这里有问题，在admin包中不要这个配置，但是basic还需要单独运行，这意味着需要两个版本
                                     </excludes>
                                 </resource>
                             </resources>

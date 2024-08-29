@@ -11,6 +11,15 @@ spring:
     username: root
     password: 465700
     driver-class-name: com.mysql.cj.jdbc.Driver
+    type:  org.apache.commons.dbcp2.BasicDataSource
+    dbcp2:
+      max-total: 10
+      max-idle: 5
+      min-idle: 5
+      initial-size: 5
+      max-wait-millis: 1000
+      test-on-borrow: true
+      validation-query: select 1
   profiles:
     active: basic,security-basic
 
@@ -22,6 +31,7 @@ spring:
     host: 127.0.0.1
     port: 6379
     database: 0
+
 springfox:
   documentation:
     swagger:

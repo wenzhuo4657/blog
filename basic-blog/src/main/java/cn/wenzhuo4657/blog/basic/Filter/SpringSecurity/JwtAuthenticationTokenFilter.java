@@ -65,7 +65,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         }
 
 
-        //  wenzhuo TODO 2024/6/17 : 根据userid从redis中获取缓存
 
         String userId=claims.getSubject();
         LoginUser loginUser=redisCache.getCacheObject(HttpEnum.redis_user+userId);
