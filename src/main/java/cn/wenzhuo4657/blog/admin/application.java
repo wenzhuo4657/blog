@@ -37,7 +37,7 @@ import java.util.Map;
                         })
                 }
         )
-@MapperScan("cn.wenzhuo4657.blog.basic.dao")
+@MapperScan({"cn.wenzhuo4657.blog.basic.dao","cn.wenzhuo4657.blog.admin.dao"})
 public class application {
 
 

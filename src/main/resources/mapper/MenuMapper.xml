@@ -2,28 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="generator.mapper.MenuMapper">
+<mapper namespace="cn.wenzhuo4657.blog.admin.dao.MenuMapper">
 
-    <resultMap id="BaseResultMap" type="generator.domain.Menu">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="menuName" column="menu_name" jdbcType="VARCHAR"/>
-            <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
-            <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
-            <result property="path" column="path" jdbcType="VARCHAR"/>
-            <result property="component" column="component" jdbcType="VARCHAR"/>
-            <result property="isFrame" column="is_frame" jdbcType="INTEGER"/>
-            <result property="menuType" column="menu_type" jdbcType="CHAR"/>
-            <result property="visible" column="visible" jdbcType="CHAR"/>
-            <result property="status" column="status" jdbcType="CHAR"/>
-            <result property="perms" column="perms" jdbcType="VARCHAR"/>
-            <result property="icon" column="icon" jdbcType="VARCHAR"/>
-            <result property="createBy" column="create_by" jdbcType="BIGINT"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="remark" column="remark" jdbcType="VARCHAR"/>
-            <result property="delFlag" column="del_flag" jdbcType="CHAR"/>
-    </resultMap>
+
 
     <sql id="Base_Column_List">
         id,menu_name,parent_id,
@@ -33,4 +14,21 @@
         create_by,create_time,update_by,
         update_time,remark,del_flag
     </sql>
+
+
+    <select id="getPermsById" resultType="java.lang.String">
+     select  perms
+     from sys_menu m
+                   right join sys_role_menu  r_m
+                       on  r_m.menu_id=m.id
+                   where  r_m.role_id=#{id}
+     </select>
+    <select id="getAllPerms" resultType="java.lang.String">
+        select  DISTINCT  perms
+        from  sys_menu m
+        where  menu_type in ("C","F")  and
+        status=0
+    </select>
+    <select id="getAllMeus" resultType="cn.wenzhuo4657.blog.admin.domain.enity.Menu"></select>
+    <select id="getById" resultType="cn.wenzhuo4657.blog.admin.domain.enity.Menu"></select>
 </mapper>

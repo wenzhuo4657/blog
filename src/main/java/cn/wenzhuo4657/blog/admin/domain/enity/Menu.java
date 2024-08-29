@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 菜单权限表
@@ -103,9 +104,67 @@ public class Menu implements Serializable {
      * 
      */
     private String delFlag;
+    @TableField(exist = false)
+    private List<Menu> children;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    public Menu(Long id, String menuName, Long parentId, Integer orderNum, String path, String component, Integer isFrame, String menuType, String visible, String status, String perms, String icon, Long createBy, Date createTime, Long updateBy, Date updateTime, String remark, String delFlag, List<Menu> children) {
+        this.id = id;
+        this.menuName = menuName;
+        this.parentId = parentId;
+        this.orderNum = orderNum;
+        this.path = path;
+        this.component = component;
+        this.isFrame = isFrame;
+        this.menuType = menuType;
+        this.visible = visible;
+        this.status = status;
+        this.perms = perms;
+        this.icon = icon;
+        this.createBy = createBy;
+        this.createTime = createTime;
+        this.updateBy = updateBy;
+        this.updateTime = updateTime;
+        this.remark = remark;
+        this.delFlag = delFlag;
+        this.children = children;
+    }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id=" + id +
+                ", menuName='" + menuName + '\'' +
+                ", parentId=" + parentId +
+                ", orderNum=" + orderNum +
+                ", path='" + path + '\'' +
+                ", component='" + component + '\'' +
+                ", isFrame=" + isFrame +
+                ", menuType='" + menuType + '\'' +
+                ", visible='" + visible + '\'' +
+                ", status='" + status + '\'' +
+                ", perms='" + perms + '\'' +
+                ", icon='" + icon + '\'' +
+                ", createBy=" + createBy +
+                ", createTime=" + createTime +
+                ", updateBy=" + updateBy +
+                ", updateTime=" + updateTime +
+                ", remark='" + remark + '\'' +
+                ", delFlag='" + delFlag + '\'' +
+                ", children=" + children +
+                '}';
+    }
+
+    public List<Menu> getChildren() {
+        return children;
+    }
+
+    public Menu setChildren(List<Menu> children) {
+        this.children = children;
+        return  this;
+    }
 
     /**
      * 菜单ID
@@ -416,32 +475,4 @@ public class Menu implements Serializable {
         return result;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", menuName=").append(menuName);
-        sb.append(", parentId=").append(parentId);
-        sb.append(", orderNum=").append(orderNum);
-        sb.append(", path=").append(path);
-        sb.append(", component=").append(component);
-        sb.append(", isFrame=").append(isFrame);
-        sb.append(", menuType=").append(menuType);
-        sb.append(", visible=").append(visible);
-        sb.append(", status=").append(status);
-        sb.append(", perms=").append(perms);
-        sb.append(", icon=").append(icon);
-        sb.append(", createBy=").append(createBy);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateBy=").append(updateBy);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", remark=").append(remark);
-        sb.append(", delFlag=").append(delFlag);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }
