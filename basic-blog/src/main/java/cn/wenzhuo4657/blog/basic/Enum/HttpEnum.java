@@ -1,5 +1,7 @@
 package cn.wenzhuo4657.blog.basic.Enum;
 
+import java.util.Map;
+
 public interface HttpEnum {
 
     ;
@@ -40,4 +42,8 @@ public interface HttpEnum {
     int Link_status_P=0;
     int Link_status_H=1;
     int Link_status_F=2;
+
+
+
+
 }

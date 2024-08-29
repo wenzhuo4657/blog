@@ -1,5 +1,6 @@
 package cn.wenzhuo4657.blog.basic;
 
+import cn.wenzhuo4657.blog.basic.Enum.HttpCode;
 import cn.wenzhuo4657.blog.basic.Enum.HttpEnum;
 import cn.wenzhuo4657.blog.basic.dao.SgArticleMapper;
 import cn.wenzhuo4657.blog.basic.domain.enity.SgArticle;
@@ -37,10 +38,10 @@ public class Application implements CommandLineRunner {
 
     public static void main(String[] args) {
         MDC.put(HttpEnum.traceId,String.valueOf(Thread.currentThread().getId()));
-        copyOfContextMap = MDC.getCopyOfContextMap();
+        HttpCode.copyOfContextMap = MDC.getCopyOfContextMap();
         SpringApplication.run(Application.class,args);
     }
-    public static Map<String, String> copyOfContextMap;
+
 
     private SgArticleMapper sgArticleMapper;
 

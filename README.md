@@ -436,6 +436,28 @@ return  this.getAuthenticationManager().authenticate(authRequest);其文档注�
 
 过滤器选择，查阅得知OncePerRequestFilter是spring框架专门提供给开发者的扩展点，在底层设计为对于每次请求仅仅会执行一次，且执行时机可在springSecurityConfig中设置为过滤器链的鉴权认证过滤器前，大大节约了资源消耗
 
+
+
+## 连接池处理
+
+查询到了连接池对比，但是由于大部分功能根本不会使用，所以此处暂时使用了commmons-dbcp。
+
+这里注意pscache功能是是一种用于改善数据库性能的技术，它主要用于缓存预编译的SQL语句（PreparedStatement）。当应用程序重复执行相同的SQL语句时，PSCache可以避免每次都需要重新解析和编译SQL语句，从而减少数据库的负担并提高查询效率。
+
+另外查询到HikariCP的高性能主要是取决于与避免对锁的竞争，但本项目是博客项目，大概率很难遇到锁竞争。
+
+| 功能            | dbcp                | druid              | c3p0                               | tomcat-jdbc       | HikariCP                           |
+| :-------------- | :------------------ | :----------------- | :--------------------------------- | :---------------- | :--------------------------------- |
+| 是否支持PSCache | 是                  | 是                 | 是                                 | 否                | 否                                 |
+| 监控            | jmx                 | jmx/log/http       | jmx,log                            | jmx               | jmx                                |
+| 扩展性          | 弱                  | 好                 | 弱                                 | 弱                | 弱                                 |
+| sql拦截及解析   | 无                  | 支持               | 无                                 | 无                | 无                                 |
+| 代码            | 简单                | 中等               | 复杂                               | 简单              | 简单                               |
+| 更新时间        | 2019.02             | 2019.05            | 2019.03                            |                   | 2019.02                            |
+| 最新版本        | 2.60                | 1.1.17             | 0.9.5.4                            |                   | 3.3.1                              |
+| 特点            | 依赖于common-pool   | 阿里开源，功能全面 | 历史久远，代码逻辑复杂，且不易维护 |                   | 优化力度大，功能简单，起源于boneCP |
+| 连接池管理      | LinkedBlockingDeque | 数组               |                                    | FairBlockingQueue | threadlocal+CopyOnWriteArrayList   |
+
 # 报错
 
 ## org.slf4j.impl.StaticLoggerBinde
@@ -689,4 +711,10 @@ public class Car {
 ```
 
 
+
+
+
+## Authentication authenticate = manager.authenticate(token);执行验证方法时栈溢出
+
+该错误是由于在admin包中奖basic的service全部排出了，其中包含有security中的loadUserByUsername方法，查阅得知，如果发证栈溢出，要么是manager注入错误，要么是loadUserByUsername方法为设置成功。
 

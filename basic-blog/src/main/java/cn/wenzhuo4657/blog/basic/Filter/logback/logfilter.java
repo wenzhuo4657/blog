@@ -1,8 +1,9 @@
 package cn.wenzhuo4657.blog.basic.Filter.logback;
 
 
-import ch.qos.logback.classic.helpers.MDCInsertingServletFilter;
+
 import cn.wenzhuo4657.blog.basic.Application;
+import cn.wenzhuo4657.blog.basic.Enum.HttpCode;
 import cn.wenzhuo4657.blog.basic.Enum.HttpEnum;
 import org.slf4j.MDC;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +22,7 @@ public class logfilter implements Filter {
     private  String MDC_TRACE_ID= HttpEnum.traceId;
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        MDC.setContextMap(Application.copyOfContextMap);
+        MDC.setContextMap(HttpCode.copyOfContextMap);
         MDC.put(MDC_TRACE_ID,String.valueOf( Thread.currentThread().getId()));
         chain.doFilter(request, response);
         MDC.clear();
