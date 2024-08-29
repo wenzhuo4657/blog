@@ -51,7 +51,7 @@ public class AdminServiceImpl implements Admin_LoginService {
         String id =principal.getUser().getId().toString();
         String jwt = JwtUtil.createJWT(id);
 
-        redisCache.setCacheObject(Code.redis_Admin+id,jwt);
+        redisCache.setCacheObject(Code.redis_Admin+id,principal);
 
         Map<String ,String> map=new HashMap<>();
         map.put("token",jwt);

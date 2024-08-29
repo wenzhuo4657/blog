@@ -1,6 +1,7 @@
 package cn.wenzhuo4657.blog.admin.config;
 
-import cn.wenzhuo4657.blog.basic.Filter.SpringSecurity.JwtAuthenticationTokenFilter;
+
+import cn.wenzhuo4657.blog.admin.filter.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,13 +26,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Profile("security-admin")
 public class SecurityConifg extends WebSecurityConfigurerAdapter {
 
-    @Bean( name="authenticationManager")
     @Override
+    @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
     @Autowired
     private JwtAuthenticationTokenFilter TOKENfilter;
+
+
+
+
+
 
 
     @Bean
@@ -52,11 +58,11 @@ public class SecurityConifg extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll();
 
         http.cors();
-
-
         http.logout().disable();
-
-
         http.addFilterBefore(TOKENfilter, UsernamePasswordAuthenticationFilter.class);
+
+
+
+
     }
 }
