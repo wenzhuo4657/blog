@@ -718,3 +718,70 @@ public class Car {
 
 该错误是由于在admin包中奖basic的service全部排出了，其中包含有security中的loadUserByUsername方法，查阅得知，如果发证栈溢出，要么是manager注入错误，要么是loadUserByUsername方法为设置成功。
 
+
+
+
+
+## lambda 表达式中使用的变量应为 final 或有效 final
+
+很奇怪，两种写法的区别仅仅在于一个是局部变量，而另一个作方法参数
+
+
+
+```
+错误写法：menus会报错
+		     List<Menu> menus=menuMapper.getAllMeus();
+       menus.stream()
+                .filter(m->m.getParentId().equals(0L))
+                .map(m->m.setChildren( getChildren(m,menus)))
+                .collect(Collectors.toList());
+```
+
+```
+    private List<SysMenu> toRoutersTree(List<SysMenu> menus, long l) {
+        List<SysMenu> menuList = menus.stream()
+                .filter(sysMenu -> sysMenu.getParentId().equals(l)).
+                map(menu -> menu.setChildren(getChildren(menu,menus))).
+                collect(Collectors.toList());
+        return menuList;
+        
+    }
+```
+
+gpt给出的答案：
+
+menus是在方法开始时传递的，并且没有在lambda表达式之前或之后进行重新赋值，所以它被认为是有效终态的。
+
+menus作为一个局部变量，在lambda表达式中被引用，但它并没有在方法中被重新赋值。
+它既没有被声明为final，也没有在方法内部被重新赋值。
+因此，menus被视为有效终态的，满足了lambda表达式的变量要求。
+
+
+
+
+
+
+
+这里尝试对meuns进行修改，发现执行romve、add等操作内部元素的方法是不会报错，但是如果修改menus的指向，例如 menus=new ArrayList<>();、menus=null;会提示同样的错误。
+
+这里猜测，其有效终态的判定是是否直接修改menus变量的指向，也就是栈区指向堆区的地址。
+
+
+
+
+
+除此之外，还有map方法要求提供的lambad表达式必须返回一个元素，实际上是对流中的元素进行操作并返回，此处的set方法需要返回一个值，但是示例代码中使用的是lombok的注解形成set方法，查询得知可以使用@Accessors(chain = true)，将其改动为链式编程，方法的返回值为this.
+
+```
+
+menu -> {
+                    return menu.setChildren(getChildren(menu, menus));
+                }
+```
+
+
+
+
+
+
+
