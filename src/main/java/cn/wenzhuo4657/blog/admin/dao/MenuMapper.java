@@ -21,6 +21,9 @@ public interface MenuMapper extends BaseMapper<Menu> {
 
     List<String> getAllPerms();
 
+      /**
+         *  des: 获取所有可用的菜单
+         * */
     List<Menu> getAllMeus();
 
     List<Menu> getById(Long userId);

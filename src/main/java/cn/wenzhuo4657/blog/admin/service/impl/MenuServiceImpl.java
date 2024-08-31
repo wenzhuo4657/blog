@@ -51,7 +51,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
         }
 
 
-        return menus;
+        List<Menu> tree = toTree(menus, 0L);
+        return tree;
     }
 
     private  List<Menu>  toTree(List<Menu> menus,Long l){

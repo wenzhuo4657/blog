@@ -110,6 +110,9 @@ public class Menu implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
+    public Menu() {
+    }
+
     public Menu(Long id, String menuName, Long parentId, Integer orderNum, String path, String component, Integer isFrame, String menuType, String visible, String status, String perms, String icon, Long createBy, Date createTime, Long updateBy, Date updateTime, String remark, String delFlag, List<Menu> children) {
         this.id = id;
         this.menuName = menuName;

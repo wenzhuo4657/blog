@@ -54,7 +54,7 @@ public class SecurityConifg extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**", "/api/v2/api-docs").permitAll()
                 .antMatchers("/user/login").anonymous()
-                .antMatchers("/logout").authenticated()
+                .antMatchers("/user/logout").authenticated()
                 .anyRequest().permitAll();
 
         http.cors();
