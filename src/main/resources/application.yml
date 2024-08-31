@@ -46,6 +46,13 @@ mybatis-plus:
     reasonable: true
 
 
+pagehelper:
+  propertyName: propertyValue
+  reasonable: false
+  defaultCount: true
+
+
+
 
 project:
   folder:  E:/logs/app

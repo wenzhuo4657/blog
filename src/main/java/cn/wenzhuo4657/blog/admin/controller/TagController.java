@@ -2,6 +2,7 @@ package cn.wenzhuo4657.blog.admin.controller;
 
 import cn.wenzhuo4657.blog.admin.Enum.Code;
 import cn.wenzhuo4657.blog.admin.domain.vo.TagVo;
+import cn.wenzhuo4657.blog.admin.service.TagService;
 import cn.wenzhuo4657.blog.basic.annotation.PrintLog;
 import cn.wenzhuo4657.blog.basic.domain.ResponseResult;
 import cn.wenzhuo4657.blog.basic.utils.SecurityUtils;
@@ -22,6 +23,11 @@ import org.springframework.web.bind.annotation.*;
 @Api("标签")
 public class TagController {
 
+    private TagService tagService;
+
+    public TagController(TagService tagService) {
+        this.tagService = tagService;
+    }
 
     @GetMapping("/list")
     @ApiOperation(value = "获取可用标签列表")
@@ -29,7 +35,16 @@ public class TagController {
     public ResponseResult  getTagList(@RequestParam("pageNum") Integer pageNum,
                                     @RequestParam("pageSize") Integer pageSize,
                                     TagVo tagVo) {
-        return  ResponseResult.okResult();
+        return  tagService.getlist(pageNum,pageSize,tagVo);
     }
+
+    @PostMapping()
+    @ApiOperation(value = "获取可用标签列表")
+    @PrintLog
+    public ResponseResult  InsertTag(@RequestBody TagVo tagVo) {
+        return  tagService.insertTag(tagVo);
+    }
+
+
 
 }

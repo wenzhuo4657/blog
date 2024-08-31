@@ -2,8 +2,11 @@ package cn.wenzhuo4657.blog.admin.dao;
 
 
 import cn.wenzhuo4657.blog.admin.domain.enity.Tag;
+import cn.wenzhuo4657.blog.admin.domain.vo.TagVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
 * @author 86147
@@ -14,6 +17,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface TagMapper extends BaseMapper<Tag> {
 
+    List<Tag> selectByTagvo(TagVo tagVo);
 }
 
 
