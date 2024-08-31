@@ -785,3 +785,63 @@ menu -> {
 
 
 
+## 注解Path
+
+写法1
+
+```
+    public ResponseResult  getTagList( Integer pageNum,
+                                     Integer pageSize,
+                                      TagVo tagVo) {
+        return  ResponseResult.okResult();
+    }
+```
+
+写法2
+
+```
+
+    public ResponseResult  getTagList(@PathVariable Integer pageNum,
+                                    @PathVariable Integer pageSize,
+                                      TagVo tagVo) {
+        return  ResponseResult.okResult();
+    }
+```
+
+
+
+两种写法的不同仅仅在于注解的使用，但是当前端传来的路径参数中没有TagVo参数时，写法1无论何时都是正确的，而写法2前端会报500错误，在我的后台内也没有路径请求的信息，这意味着请求路径不匹配，
+
+
+
+
+
+额，搞错了
+
+@PathVariable ：路径请求参数
+
+@RequestParam：queryString请求参数
+
+@RequestBody：json请求参数
+
+
+
+而此处前端是queryString请求参数，应该使用@RequestParam，且同时，参数匹配在默认请求下和请求路径的匹配无关，且如果没有对参数进行配置，则该参数就不是必须的。
+
+
+
+```
+    @GetMapping("/list")
+    @ApiOperation(value = "获取可用标签列表")
+    @PrintLog
+    public ResponseResult  getTagList(@RequestParam("pageNum") Integer pageNum,
+                                    @RequestParam("pageSize") Integer pageSize,
+                                    TagVo tagVo) {
+        return  ResponseResult.okResult();
+    }
+```
+
+
+
+
+
