@@ -55,7 +55,10 @@ mybatis-plus:
     rowBoundsWithCount: true
     reasonable: true
 
-
+pagehelper:
+  propertyName: propertyValue
+  reasonable: false
+  defaultCount: true
 
 project:
   folder:  E:/logs/app

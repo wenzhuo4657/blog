@@ -845,3 +845,32 @@ menu -> {
 
 
 
+![这是前端所传的json,](C:\Users\86147\AppData\Roaming\Typora\typora-user-images\image-20240831131121557.png)
+
+```
+    public ResponseResult  InsertTag(@RequestBody TagVo tagVo) {
+        return  tagService.insertTag(tagVo);
+    }
+    
+    public class TagVo {
+
+    private String name;
+
+    private  String remark;
+    }
+```
+
+
+
+很奇怪，不知道为什么不加上@RequestBody，就无法正常接受到参数，
+
+gpt的回答：
+
+@RequestBody 告诉Spring MVC框架，“请将请求体中的内容序列化为一个 TagVo 对象，并将其传递给 InsertTag 方法，如果不添加，mvc框架不知道如何解析这个json字符串，
+
+
+
+进一步尝试后，发现springboot一般不支持多个@RequestBody ，一般是将请求体，也就是json整个字符串赋值给一个参数接受，所以此处的注解相当于给了springmvc一个解析json的格式，
+
+
+

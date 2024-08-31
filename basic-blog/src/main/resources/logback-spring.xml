@@ -51,6 +51,7 @@
 
 
     <logger name="org.eclipse.jetty" level="INFO"/>
+    <logger name="com.github.pagehelper" level="INFO"/>
 
     <logger name="cn/wenzhuo4657/blog/basic" level="INFO" additivity="false">
         <appender-ref ref="All_APPENDER"></appender-ref>
