@@ -2,8 +2,11 @@ package cn.wenzhuo4657.blog.admin.dao;
 
 
 import cn.wenzhuo4657.blog.admin.domain.enity.Article;
+import cn.wenzhuo4657.blog.admin.domain.vo.ArticleVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
 * @author 86147
@@ -14,6 +17,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
 
+    List<Article> selectByArticleVo(ArticleVo vo);
 }
 
 

@@ -2,14 +2,21 @@ package cn.wenzhuo4657.blog.admin.service.impl;
 
 import cn.wenzhuo4657.blog.admin.dao.ArticleMapper;
 import cn.wenzhuo4657.blog.admin.domain.enity.Article;
+import cn.wenzhuo4657.blog.admin.domain.enity.Category;
 import cn.wenzhuo4657.blog.admin.domain.vo.ArticleDto;
+import cn.wenzhuo4657.blog.admin.domain.vo.ArticleVo;
+import cn.wenzhuo4657.blog.admin.domain.vo.PageVo;
 import cn.wenzhuo4657.blog.admin.service.ArticleService;
 import cn.wenzhuo4657.blog.admin.service.ArticleTagService;
 import cn.wenzhuo4657.blog.basic.domain.ResponseResult;
 import cn.wenzhuo4657.blog.basic.utils.BeancopyUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
 * @author 86147
@@ -21,8 +28,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     implements ArticleService {
     private ArticleTagService articleTagService;
 
-    public ArticleServiceImpl(ArticleTagService articleTagService) {
+    private  ArticleMapper articleMapper;
+
+
+    public ArticleServiceImpl(ArticleTagService articleTagService, ArticleMapper articleMapper) {
         this.articleTagService = articleTagService;
+        this.articleMapper = articleMapper;
     }
 
     @Override
@@ -35,6 +46,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         save(bean);
         articleTagService.Relevancy(article.getId(),article.getTags());
         return ResponseResult.okResult();
+    }
+
+    @Override
+    public PageVo getPageVo(Integer pageNum, Integer pageSize, ArticleVo vo) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Article> list=articleMapper.selectByArticleVo(vo);
+        PageInfo info=new PageInfo<>(list);
+        PageVo pageVo=new PageVo(info.getList(),info.getTotal());
+        return pageVo;
+
     }
 }
 

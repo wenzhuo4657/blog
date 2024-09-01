@@ -29,4 +29,17 @@
         is_comment,create_by,create_time,
         update_by,update_time,del_flag
     </sql>
+    <select id="selectByArticleVo" resultType="cn.wenzhuo4657.blog.admin.domain.enity.Article">
+        select  * from
+                      sg_article
+        <where>
+            <if test="title!=null">
+                and title=#{title}
+            </if>
+            <if test="summary!=null">
+                and summary=#{summary}
+            </if>
+        and del_flag=0
+        </where>
+    </select>
 </mapper>

@@ -3,6 +3,8 @@ package cn.wenzhuo4657.blog.admin.service;
 
 import cn.wenzhuo4657.blog.admin.domain.enity.Article;
 import cn.wenzhuo4657.blog.admin.domain.vo.ArticleDto;
+import cn.wenzhuo4657.blog.admin.domain.vo.ArticleVo;
+import cn.wenzhuo4657.blog.admin.domain.vo.PageVo;
 import cn.wenzhuo4657.blog.basic.domain.ResponseResult;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -14,4 +16,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface ArticleService extends IService<Article> {
 
     ResponseResult add(ArticleDto article);
+
+    PageVo getPageVo(Integer pageNum, Integer pageSize, ArticleVo vo);
 }
