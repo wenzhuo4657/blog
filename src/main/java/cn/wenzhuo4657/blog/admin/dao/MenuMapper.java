@@ -4,6 +4,7 @@ package cn.wenzhuo4657.blog.admin.dao;
 import cn.wenzhuo4657.blog.admin.domain.enity.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 @Mapper
 public interface MenuMapper extends BaseMapper<Menu> {
 
-    List<String> getPermsById(Long id);
+    List<String> getPermsById(@Param("id") Long userid);
 
     List<String> getAllPerms();
 

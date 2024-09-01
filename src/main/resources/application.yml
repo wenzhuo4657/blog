@@ -36,7 +36,7 @@ mybatis-plus:
       logic-delete-field: delFlag  # 指定逻辑删除字段
       logic-delete-value: 1
       logic-not-delete-value: 0
-      id-type: auto
+      id-type: auto  # id自增
   configuration:
     map-underscore-to-camel-case: true
     log-impl:  org.apache.ibatis.logging.stdout.StdOutImpl
@@ -57,7 +57,10 @@ pagehelper:
 project:
   folder:  E:/logs/app
 
-
+oss:
+  accessKey: 33hzmmqPOwSsWXDjOVPI_8Vxd8CIEYxIuX-4d-Xm
+  secreKey: 1yX5LrMf15Y93IpVgB6gVF8tn2DUg1Qq2g7VO_zc
+  bucket: blog
 swagger:
   basePackage: cn.wenzhuo4657.blog.admin.controller
 

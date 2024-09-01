@@ -6,12 +6,17 @@ import cn.wenzhuo4657.blog.admin.domain.vo.PageVo;
 import cn.wenzhuo4657.blog.admin.domain.vo.TagVo;
 import cn.wenzhuo4657.blog.admin.service.TagService;
 import cn.wenzhuo4657.blog.basic.domain.ResponseResult;
+import cn.wenzhuo4657.blog.basic.utils.BeancopyUtils;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.xml.ws.Response;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,7 +36,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
     }
 
     @Override
-    public ResponseResult getlist(Integer pageNum, Integer pageSize, TagVo tagVo) {
+    public ResponseResult getlist( Integer pageNum, Integer pageSize, TagVo tagVo) {
         PageHelper.startPage(pageNum, pageSize);
         List<Tag>  list=tagMapper.selectByTagvo(tagVo);
         PageInfo info=new PageInfo<>(list);
@@ -40,8 +45,19 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
     }
 
     @Override
-    public ResponseResult insertTag(TagVo tagVo) {
+    public ResponseResult insertTag( TagVo tagVo) {
+        Tag tag= BeancopyUtils.copyBean(tagVo,Tag.class);
+        tagMapper.insert(tag);
         return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult<TagVo> getAllTag() {
+        LambdaQueryWrapper<Tag> wrapper=new LambdaQueryWrapper<>();
+        wrapper.select(Tag::getId,Tag::getName);
+        List<Tag> list = list(wrapper);
+        List<TagVo> voList=BeancopyUtils.copyBeanList(list,TagVo.class);
+        return ResponseResult.okResult(voList);
     }
 }
 

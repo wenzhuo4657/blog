@@ -17,11 +17,16 @@
 
 
     <select id="getPermsById" resultType="java.lang.String">
-     select  perms
-     from sys_menu m
-                   right join sys_role_menu  r_m
-                       on  r_m.menu_id=m.id
-                   where  r_m.role_id=#{id}
+        SELECT
+            DISTINCT  perms
+        FROM
+            `sys_user_role` ur
+                LEFT JOIN `sys_role_menu` rm ON ur.`role_id` = rm.`role_id`
+                LEFT JOIN `sys_menu` m ON m.`id` = rm.`menu_id`
+        WHERE
+            ur.`user_id` = #{id} AND
+            m.`status` = 0 AND
+            m.`del_flag` = 0
      </select>
     <select id="getAllPerms" resultType="java.lang.String">
         select  DISTINCT  perms

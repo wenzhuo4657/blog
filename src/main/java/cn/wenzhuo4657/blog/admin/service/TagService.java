@@ -16,4 +16,6 @@ public interface TagService extends IService<Tag> {
     ResponseResult getlist(Integer pageNum, Integer pageSize, TagVo tagVo);
 
     ResponseResult insertTag(TagVo tagVo);
+
+    ResponseResult<TagVo> getAllTag();
 }

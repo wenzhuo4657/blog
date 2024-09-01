@@ -1,5 +1,7 @@
 package cn.wenzhuo4657.blog.admin.service.impl;
 
+import cn.wenzhuo4657.blog.admin.Enum.Code;
+import cn.wenzhuo4657.blog.admin.dao.MenuMapper;
 import cn.wenzhuo4657.blog.basic.dao.UserHDao;
 import cn.wenzhuo4657.blog.basic.domain.enity.LoginUser;
 import cn.wenzhuo4657.blog.basic.domain.enity.UserH;
@@ -11,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @className: UserDetailsServiceImpl
@@ -23,14 +26,27 @@ import java.util.ArrayList;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
     private UserHDao userHDao;
+
+    private MenuMapper menuMapper;
+
+    public UserDetailsServiceImpl(UserHDao userHDao, MenuMapper menuMapper) {
+        this.userHDao = userHDao;
+        this.menuMapper = menuMapper;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         LambdaQueryWrapper<UserH> wrapper=new LambdaQueryWrapper<>();
         wrapper.eq(UserH::getUserName,username);
         UserH userH=userHDao.selectOne(wrapper);
-        LoginUser loginUser =new LoginUser(userH,new ArrayList<>());
+        List<String> list=null;
+        if (Code.Mysql_admin_id.equals(userH.getId())){
+            list=menuMapper.getAllPerms();
+        }else {
+            menuMapper.getPermsById(userH.getId());
+        }
+        LoginUser loginUser =new LoginUser(userH,list);
         return loginUser;
 
     }
