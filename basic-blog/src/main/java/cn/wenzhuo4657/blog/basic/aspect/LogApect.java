@@ -12,6 +12,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -48,7 +49,12 @@ public class LogApect {
         log.info("======start");
         log.info("请求url: "+request.getRequestURI()+"  请求方式： "+request.getMethod());
         log.info("访问IP    : {}"+"   请求类名   : {}",request.getRemoteHost(),point.getSignature().getDeclaringTypeName(),((MethodSignature) point.getSignature()).getName());
-        log.info("传入参数   : {}", JSON.toJSONString(point.getArgs()));
+        try {
+            log.info("传入参数   : {}", JSON.toJSONString(point.getArgs()));
+        }catch (Exception e) {
+            log.info("json解析参数失败，----------");
+        }
+
     }
 
     @AfterReturning(value = "cut()",returning = "result")

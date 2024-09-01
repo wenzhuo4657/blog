@@ -169,6 +169,10 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -190,11 +194,11 @@
                             <resources>
                                 <resource>
                                     <directory>src/main/resources</directory>
-                                    <excludes>
-                                        <exclude>application.yml</exclude>
-                                        <exclude>logback-spring.xml</exclude>
-                                        //  wenzhuo TODO 2024/8/29 : 这里有问题，在admin包中不要这个配置，但是basic还需要单独运行，这意味着需要两个版本
-                                    </excludes>
+<!--                                    <excludes>-->
+<!--                                        <exclude>application.yml</exclude>-->
+<!--                                        <exclude>logback-spring.xml</exclude>-->
+<!--                                        //  wenzhuo TODO 2024/8/29 : 这里有问题，在admin包中不要这个配置，但是basic还需要单独运行，这意味着需要两个版本-->
+<!--                                    </excludes>-->
                                 </resource>
                             </resources>
                         </configuration>
