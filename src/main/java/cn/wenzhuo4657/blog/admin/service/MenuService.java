@@ -2,6 +2,7 @@ package cn.wenzhuo4657.blog.admin.service;
 
 
 import cn.wenzhuo4657.blog.admin.domain.enity.Menu;
+import cn.wenzhuo4657.blog.admin.domain.vo.MenuVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface MenuService extends IService<Menu> {
     List<String> getPermsById(Long id);
 
     List<Menu> getRoutersTree(Long userId);
+
+    List<MenuVo> getAll();
 }

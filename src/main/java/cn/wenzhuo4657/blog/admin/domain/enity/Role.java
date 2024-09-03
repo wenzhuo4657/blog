@@ -13,6 +13,11 @@ import java.util.Date;
  */
 @TableName(value ="sys_role")
 public class Role implements Serializable {
+    public Role(Long id, String status) {
+        this.id = id;
+        this.status = status;
+    }
+
     /**
      * 角色ID
      */

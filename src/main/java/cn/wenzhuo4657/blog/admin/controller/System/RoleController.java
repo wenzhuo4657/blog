@@ -1,5 +1,6 @@
 package cn.wenzhuo4657.blog.admin.controller.System;
 
+import cn.wenzhuo4657.blog.admin.domain.enity.Role;
 import cn.wenzhuo4657.blog.admin.domain.vo.RoleVo;
 import cn.wenzhuo4657.blog.admin.service.RoleService;
 import cn.wenzhuo4657.blog.basic.annotation.PrintLog;
@@ -7,10 +8,7 @@ import cn.wenzhuo4657.blog.basic.domain.ResponseResult;
 import cn.wenzhuo4657.blog.basic.domain.vo.pageVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @className: RoleController
@@ -37,6 +35,14 @@ public class RoleController {
                                              RoleVo vo) {
         pageVo pageVo = roleService.getPageVo(pageNum, pageSize, vo);
         return ResponseResult.okResult(pageVo);
+    }
+
+    @PutMapping("/changeStatus")
+    @ApiOperation(value = "根据id改变角色的状态，")
+    @PrintLog
+    public ResponseResult changeStatus(@RequestBody RoleVo vo) {
+        roleService.updateById(new Role(vo.getRoleId(), vo.getStatus()));
+        return ResponseResult.okResult();
     }
 
 }

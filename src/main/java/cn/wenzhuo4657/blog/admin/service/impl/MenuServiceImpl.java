@@ -3,12 +3,14 @@ package cn.wenzhuo4657.blog.admin.service.impl;
 import cn.wenzhuo4657.blog.admin.Enum.Code;
 import cn.wenzhuo4657.blog.admin.dao.MenuMapper;
 import cn.wenzhuo4657.blog.admin.domain.enity.Menu;
+import cn.wenzhuo4657.blog.admin.domain.vo.MenuVo;
 import cn.wenzhuo4657.blog.admin.service.MenuService;
+import cn.wenzhuo4657.blog.basic.utils.BeancopyUtils;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,6 +74,17 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
 //            ，必须保证没有循环的id和parentId，否则就会陷入无限递归。
                 .collect(Collectors.toList());
         return childrenList;
+    }
+
+
+    @Override
+    public List<MenuVo> getAll() {
+        LambdaQueryWrapper<Menu> wrapper=new LambdaQueryWrapper<>();
+        wrapper.orderByAsc(Menu::getParentId);
+        wrapper.orderByAsc(Menu::getOrderNum);
+        List<Menu> menus = menuMapper.selectList(wrapper);
+        List<MenuVo> menuVos = BeancopyUtils.copyBeanList(menus, MenuVo.class);
+        return menuVos;
     }
 }
 
