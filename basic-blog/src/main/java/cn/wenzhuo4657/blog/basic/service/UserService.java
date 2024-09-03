@@ -3,6 +3,8 @@ package cn.wenzhuo4657.blog.basic.service;
 
 import cn.wenzhuo4657.blog.basic.domain.ResponseResult;
 import cn.wenzhuo4657.blog.basic.domain.enity.User;
+import cn.wenzhuo4657.blog.basic.domain.vo.UserInfoDto;
+import cn.wenzhuo4657.blog.basic.domain.vo.pageVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -17,4 +19,7 @@ public interface UserService extends IService<User> {
     ResponseResult updateUserInfo(User user);
 
     ResponseResult register(User user);
+
+
+
 }

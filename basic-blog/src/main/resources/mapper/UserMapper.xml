@@ -32,4 +32,11 @@
     <select id="selectById_nickName" resultType="java.lang.String">
         select  user_name from sys_user where  id=#{Id}
     </select>
+    <select id="selectByUserDto" resultType="cn.wenzhuo4657.blog.basic.domain.enity.User">
+        select * from
+                    sys_user
+        <where>
+            and del_flag=0
+        </where>
+    </select>
 </mapper>

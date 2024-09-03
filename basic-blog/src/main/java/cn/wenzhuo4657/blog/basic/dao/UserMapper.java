@@ -2,8 +2,11 @@ package cn.wenzhuo4657.blog.basic.dao;
 
 
 import cn.wenzhuo4657.blog.basic.domain.enity.User;
+import cn.wenzhuo4657.blog.basic.domain.vo.UserInfoDto;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
 * @author 86147
@@ -15,6 +18,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper extends BaseMapper<User> {
 
     String selectById_nickName(Long Id);
+
+    List<User> selectByUserDto(UserInfoDto vo);
 }
 
 

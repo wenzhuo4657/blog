@@ -4,15 +4,21 @@ import cn.wenzhuo4657.blog.basic.Enum.AppHttpCodeEnum;
 import cn.wenzhuo4657.blog.basic.dao.UserMapper;
 import cn.wenzhuo4657.blog.basic.domain.ResponseResult;
 import cn.wenzhuo4657.blog.basic.domain.enity.User;
+import cn.wenzhuo4657.blog.basic.domain.vo.UserInfoDto;
 import cn.wenzhuo4657.blog.basic.domain.vo.UserInfoVo;
+import cn.wenzhuo4657.blog.basic.domain.vo.pageVo;
 import cn.wenzhuo4657.blog.basic.exception.SystemException;
 import cn.wenzhuo4657.blog.basic.service.UserService;
 import cn.wenzhuo4657.blog.basic.utils.BeancopyUtils;
 import cn.wenzhuo4657.blog.basic.utils.SecurityUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
 * @author 86147
@@ -25,8 +31,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     private PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(PasswordEncoder passwordEncoder) {
+    private UserMapper userMapper;
+
+
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserMapper userMapper) {
         this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -60,6 +70,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         save(user);
         return ResponseResult.okResult();
     }
+
+
 }
 
 
