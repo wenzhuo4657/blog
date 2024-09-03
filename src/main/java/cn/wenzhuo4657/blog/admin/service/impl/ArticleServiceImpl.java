@@ -57,6 +57,24 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         return pageVo;
 
     }
+
+    @Override
+    public void delByID(long id) {
+        articleMapper.deleteById(id);
+    }
+
+    @Override
+    public ArticleDto getByID(long id) {
+        Article article = articleMapper.selectById(id);
+        ArticleDto articleDto = BeancopyUtils.copyBean(article, ArticleDto.class);
+        return articleDto;
+    }
+
+    @Override
+    public void updataById(ArticleDto dto) {
+        Article article=BeancopyUtils.copyBean(dto, Article.class);
+        articleMapper.updateById(article);
+    }
 }
 
 

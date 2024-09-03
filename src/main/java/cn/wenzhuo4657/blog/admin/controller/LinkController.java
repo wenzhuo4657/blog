@@ -1,7 +1,8 @@
 package cn.wenzhuo4657.blog.admin.controller;
 
 import cn.wenzhuo4657.blog.admin.domain.vo.LinkVo;
-import cn.wenzhuo4657.blog.admin.domain.vo.TagVo;
+import cn.wenzhuo4657.blog.admin.domain.vo.PageVo;
+import cn.wenzhuo4657.blog.admin.service.LinkService;
 import cn.wenzhuo4657.blog.basic.annotation.PrintLog;
 import cn.wenzhuo4657.blog.basic.domain.ResponseResult;
 import io.swagger.annotations.Api;
@@ -22,14 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
 @Api("友链管理")
 @RequestMapping("/content/link")
 public class LinkController {
+    private LinkService linkService;
 
+    public LinkController(LinkService linkService) {
+        this.linkService = linkService;
+    }
 
     @GetMapping("/list")
     @ApiOperation(value = "获取友链列表")
     @PrintLog
-    public ResponseResult getTagList(@RequestParam("pageNum") Integer pageNum,
+    public ResponseResult<PageVo> getTagList(@RequestParam("pageNum") Integer pageNum,
                                      @RequestParam("pageSize") Integer pageSize,
                                      LinkVo LinkVo) {
-        return  tagService.getlist(pageNum,pageSize,tagVo);
+        PageVo pageVo=linkService.getPageVo(pageNum,pageSize,LinkVo);
+        return  ResponseResult.okResult(pageVo);
     }
 }

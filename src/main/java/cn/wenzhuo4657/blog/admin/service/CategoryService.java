@@ -19,4 +19,9 @@ public interface CategoryService extends IService<Category> {
     List<CategoryDto> getList();
 
     PageVo getPage(Integer pageSize, Integer pageNum, CategoryDto categoryDto);
+
+    void delByID(long id);
+
+
+    Category selectById(long id);
 }

@@ -52,6 +52,19 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
         PageVo vo=new PageVo(info.getList(),info.getTotal());
         return vo;
     }
+
+    @Override
+    public void delByID(long id) {
+        categoryMapper.deleteById(id);
+    }
+
+
+
+    @Override
+    public Category selectById(long id) {
+        return categoryMapper.selectById(id);
+
+    }
 }
 
 

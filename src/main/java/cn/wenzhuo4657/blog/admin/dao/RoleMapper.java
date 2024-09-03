@@ -2,6 +2,8 @@ package cn.wenzhuo4657.blog.admin.dao;
 
 
 import cn.wenzhuo4657.blog.admin.domain.enity.Role;
+import cn.wenzhuo4657.blog.admin.domain.enity.Tag;
+import cn.wenzhuo4657.blog.admin.domain.vo.RoleVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,6 +19,8 @@ import java.util.List;
 public interface RoleMapper extends BaseMapper<Role> {
 
     List<String> getRoleById(Long id);
+
+    List<Role> selectByRolevo(RoleVo vo);
 }
 
 

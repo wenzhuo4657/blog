@@ -1,6 +1,8 @@
 package cn.wenzhuo4657.blog.admin.service;
 
 import cn.wenzhuo4657.blog.admin.domain.enity.Role;
+import cn.wenzhuo4657.blog.admin.domain.vo.RoleVo;
+import cn.wenzhuo4657.blog.basic.domain.vo.pageVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -13,4 +15,6 @@ import java.util.List;
 public interface RoleService extends IService<Role> {
 
     List<String> getRoleById(Long id);
+
+    pageVo getPageVo(Integer pageNum, Integer pageSize, RoleVo vo);
 }

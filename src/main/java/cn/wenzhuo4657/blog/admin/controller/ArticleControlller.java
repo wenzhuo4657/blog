@@ -43,4 +43,26 @@ public class ArticleControlller {
         return ResponseResult.okResult(articleService.getPageVo(pageNum,pageSize,vo));
     }
 
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "根据id删除文章")
+    @PrintLog
+    public ResponseResult del(@PathVariable("id") long id) {
+        articleService.delByID(id);
+        return ResponseResult.okResult();
+    }
+    @GetMapping("/{id}")
+    @ApiOperation(value = "获取文章dto")
+    @PrintLog
+    public ResponseResult<ArticleDto> get(@PathVariable("id") long id) {
+        ArticleDto dto = articleService.getByID(id);
+        return ResponseResult.okResult(dto);
+    }
+    @PutMapping()
+    @ApiOperation(value = "更新文章")
+    @PrintLog
+    public ResponseResult updata(@RequestBody ArticleDto dto) {
+         articleService.updataById(dto);
+        return ResponseResult.okResult();
+    }
+
 }

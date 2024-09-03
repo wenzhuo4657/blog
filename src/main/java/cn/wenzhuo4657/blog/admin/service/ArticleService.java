@@ -18,4 +18,10 @@ public interface ArticleService extends IService<Article> {
     ResponseResult add(ArticleDto article);
 
     PageVo getPageVo(Integer pageNum, Integer pageSize, ArticleVo vo);
+
+    void delByID(long id);
+
+    ArticleDto getByID(long id);
+
+    void updataById(ArticleDto dto);
 }

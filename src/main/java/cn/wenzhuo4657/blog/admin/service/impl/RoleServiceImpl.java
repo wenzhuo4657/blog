@@ -3,9 +3,16 @@ package cn.wenzhuo4657.blog.admin.service.impl;
 import cn.wenzhuo4657.blog.admin.Enum.Code;
 import cn.wenzhuo4657.blog.admin.dao.RoleMapper;
 import cn.wenzhuo4657.blog.admin.domain.enity.Role;
+import cn.wenzhuo4657.blog.admin.domain.enity.Tag;
+import cn.wenzhuo4657.blog.admin.domain.vo.PageVo;
+import cn.wenzhuo4657.blog.admin.domain.vo.RoleVo;
 import cn.wenzhuo4657.blog.admin.service.RoleService;
+import cn.wenzhuo4657.blog.basic.domain.ResponseResult;
+import cn.wenzhuo4657.blog.basic.domain.vo.pageVo;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,6 +41,15 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
 
         }
         return roleMapper.getRoleById(id);
+    }
+
+    @Override
+    public pageVo getPageVo(Integer pageNum, Integer pageSize, RoleVo vo) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Role>  list=roleMapper.selectByRolevo(vo);
+        PageInfo info=new PageInfo<>(list);
+        pageVo volist=new pageVo(info.getList(),info.getTotal());
+        return volist;
     }
 }
 
